@@ -68,12 +68,16 @@ func (runner *runner) Run(args []string) {
 		runner.Stop()
 	}
 
+	fmt.Printf("%s Building...\n", runner.prefix)
+
 	err := runner.builder.Build(args)
 	if err != nil {
 		fmt.Printf("%s Error while building application:\n", runner.prefix)
 		fmt.Println(err)
 		return
 	}
+
+	fmt.Printf("%s Build finished\n", runner.prefix)
 
 	runner.command = exec.Command(
 		runner.builder.GetExecutable(),
