@@ -2,6 +2,7 @@ package main
 
 import (
 	"errors"
+	"fmt"
 	"log"
 	"os"
 	"os/signal"
@@ -54,6 +55,9 @@ func WatchForChanges(options *Options) {
 			}
 
 		case <-cancel:
+			// Print an empty live because a SIGTERM doesn't include one
+			// and it would write our logs in the next line
+			fmt.Println()
 			return
 		}
 	}
