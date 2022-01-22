@@ -23,7 +23,7 @@ func main() {
 	}
 
 	WatchForChanges(&Options{
-		Interval: time.Second,
+		Interval: 5 * time.Second,
 		Path:     wd,
 	})
 }
@@ -66,12 +66,17 @@ func scanChanges(
 	var hasFileChanges = errors.New("file changes")
 
 	err := filepath.Walk(watchPath, func(path string, info os.FileInfo, err error) error {
-		if path == ".git" && info.IsDir() {
-			return filepath.SkipDir
+		if info.IsDir() {
+			// Skip any hidden directory
+			if filepath.Base(path)[0] == '.' {
+				return filepath.SkipDir
+			}
+
+			return nil
 		}
 
-		// ignore hidden files
-		if filepath.Base(path)[0] == '.' {
+		// Skip any files which are not go files
+		if filepath.Ext(path) != ".go" {
 			return nil
 		}
 
