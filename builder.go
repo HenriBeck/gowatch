@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"os"
 	"os/exec"
 	"path"
@@ -48,9 +49,11 @@ func (builder *builder) Build(args []string) error {
 	commandArgs = append(commandArgs, args...)
 
 	// nolint:gosec
-	err := exec.Command("go", commandArgs...).Run()
+	cmd := exec.Command("go", commandArgs...)
+
+	output, err := cmd.CombinedOutput()
 	if err != nil {
-		return err
+		return fmt.Errorf("%v: \n %s", err, output)
 	}
 
 	return nil
