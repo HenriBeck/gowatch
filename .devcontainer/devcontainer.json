@@ -3,10 +3,9 @@
   "build": {
     "dockerfile": "Dockerfile"
   },
-  "workspaceMount": "source=${localWorkspaceFolder},target=/goload,type=bind,consistency=cached",
-  "workspaceFolder": "/goload",
+  "workspaceMount": "source=${localWorkspaceFolder},target=/gowatch,type=bind,consistency=cached",
+  "workspaceFolder": "/gowatch",
   "settings": {
-    "terminal.integrated.defaultProfile.linux": "/bin/bash",
     "go.toolsManagement.checkForUpdates": "local",
     "go.useLanguageServer": true,
     "go.gopath": "/go",
